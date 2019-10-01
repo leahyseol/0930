@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+#dragtarget{
+	width: 100px;
+	height:100px;
+	background-color: coral;
+}
+
+#dragInner{
+	width:inherit;
+	height:30px;
+	background-color: brown;
+	color:white;
+}
+
+#dropzone{
+	width:500px;
+	height:500px;
+	background-color:Lightblue;
+	
+	position:absolute;
+	left:300px;
+	top:300px;
+}
+</style>
+</head>
+<body>
+
+<div id="dragtarget">
+	<div id="dragInner" draggable="true" ondragstart="handleDragStart(event);">
+		Drag Target
+	</div>
+</div>
+
+<div id="dropzone" ondragover="event.preventDefault();" ondrop="handledrop"></div>
+
+
+<script>
+function handleDragStart(event){
+	console.log('DragStart');
+	var parentNode=event.target.parentElement;
+	event.dateTransfer.setDragImage(parentNode,50,50);
+	
+	event.dataTransfer.setData('id',parentNode.id); //('id','tragtarget')
+	
+}
+
+function handleDrop(event){
+	console.log('Drop');
+	event.preventDefault();
+	
+	var targetId=event.dataTransfer.getData('id');
+	
+	var divElem=document.getElementById(targetId);
+	event.target.appendChild(divElem);
+}
+</script>
+</body>
+</html>
